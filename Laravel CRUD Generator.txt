@@ -1,0 +1,64 @@
+=======================
+Laravel CRUD Generator
+=======================
+
+1.- Instalar el paquete CRUD Generator:
+
+	composer require ibex/crud-generator --dev
+
+2.- Publicar la configuración del paquete predeterminado (opcional)
+
+	php artisan vendor:publish --tag=crud
+
+3.- Crear las migraciones de las tablas que contiene la Base de datos: 
+	
+	php artisan make:migration create_categorias_table
+
+	php artisan make:migration create_productos_table
+	
+4.- En la carpeta database\migrations archivos create_categorias_table y create_productos_table agregar los campos de la tablas:
+
+    public function up(): void
+    {
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->id();
+            $table->string('categoria');
+            $table->timestamps();
+        });
+    }
+
+    public function up(): void
+    {
+        Schema::create('productos', function (Blueprint $table) {
+            $table->id();
+            $table->string('codigo');
+            $table->string('producto');
+            $table->foreignId('idcategoria')->constrained('categorias');
+            $table->integer('existencia');
+            $table->timestamps();
+        });
+    }
+	
+5.- Ejecutar las migraciones con el comando:
+
+	php artisan migrate
+	
+6.- Ejecutar este comando para crear el CRUD
+
+	php artisan make:crud categorias
+
+	php artisan make:crud productos
+	
+7.- Para dar estilo al componente paginación ir a carpeta App\Providers\AppServiceProvider y en el archivo AppServiceProvider.php.
+
+	use Illuminate\Pagination\Paginator;
+	
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        Paginator::useBootstrapFive();
+    }
+
+	

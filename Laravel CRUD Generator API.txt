@@ -1,0 +1,54 @@
+===========================
+Laravel CRUD Generator API
+===========================
+
+1.- Crear un proyecto nuevo en laravel:
+
+	composer create-project laravel/laravel nombre-app
+
+2.- Configurar con cual base de datos va ha conectar
+	en el archivo .env (Si es MySQL usa esta configuración)
+	
+	DB_CONNECTION=mysql
+	DB_HOST=127.0.0.1
+	DB_PORT=3306
+	DB_DATABASE=name_database
+	DB_USERNAME=user_database
+	DB_PASSWORD=password_database
+	
+3.- Ejecutar el comando: php artisan migrate
+
+4.- Ejecutar el comando: php artisan install:api
+
+5.- En el Model User.php agregar el trait HasApiTokens
+	y importa el paquete:
+
+	use Laravel\Sanctum\HasApiTokens;
+	
+6.- Instalar el paquete CRUD Generator:
+
+	composer require ibex/crud-generator --dev
+	
+7.- Publicar la configuración del paquete predeterminado (opcional)
+
+	php artisan vendor:publish --tag=crud
+	
+8.- Ejecutar este comando para crear el CRUD
+
+	php artisan make:crud productos api
+	
+9.- Crea la ruta en el archivo api.php que esta en la carpeta routes
+
+	Route::apiResource('productos', ProductoController::class);
+	
+	Importa el paquete:
+	
+	use App\Http\Controllers\Api\ProductoController;
+	
+10.- Ver in listado de las rutas de la API:
+
+	php artisan route:list
+	
+11.- Ejecuta el servidor de laravel con el comando:
+
+	php artisan serve
